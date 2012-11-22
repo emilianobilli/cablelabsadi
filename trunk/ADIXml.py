@@ -157,8 +157,9 @@ class StillImage(Media):
         Metadata.append(App_Data_Element(self.App_Data_App, "Image_Aspect_Ratio", self.Image_Aspect_Ratio))
 
         Content.attrib["Value"] = self.Content_Value
-        Asset.append(Content)
+        
         Asset.append(Metadata)
+        Asset.append(Content)
 
         return Asset
 
@@ -219,6 +220,8 @@ class Movie(Media):
         
         Asset.append(Metadata)
         Asset.append(Content)
+
+
         
         return Asset
 
