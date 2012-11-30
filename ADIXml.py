@@ -234,13 +234,17 @@ def Package_fromADIFile(ADIFile=None):
     return None
 
 def Package_toADIFile(package=None, ADIFile=None):
-    if package is not None and ADIFile is not None:
+    if package is not None:
         ADIElement = package.AdiElement()
         if ADIElement is not None:
 	    indent(ADIElement)
             AdiString = tostring(ADIElement, encoding="ISO-8859-1")
-            fd = open(ADIFile, "wb")
-            fd.write(AdiString)
+	    if ADIFile is not None:
+        	fd = open(ADIFile, "wb")
+        	fd.write(AdiString)
+		fd.close()
+	    else:
+		return AdiString
             
 
 def Package_fromElement(ADIElement=None):
