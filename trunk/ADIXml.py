@@ -155,7 +155,8 @@ class StillImage(Media):
         Metadata.append(App_Data_Element(self.App_Data_App, "Type", self.Type))
         Metadata.append(App_Data_Element(self.App_Data_App, "Content_FileSize", self.Content_FileSize))
         Metadata.append(App_Data_Element(self.App_Data_App, "Content_CheckSum", self.Content_CheckSum))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Image_Aspect_Ratio", self.Image_Aspect_Ratio))
+	if self.Image_Aspect_Ratio != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Image_Aspect_Ratio", self.Image_Aspect_Ratio))
 
         Content.attrib["Value"] = self.Content_Value
         
