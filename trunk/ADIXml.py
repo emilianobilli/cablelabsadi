@@ -27,6 +27,7 @@ def indent(elem, level=0):
 #
 def App_Data_Element(App=u'', Name=u'', Value=u''):
     App_Data = Element("App_Data")
+    
     App_Data.attrib["App"]   = App
     App_Data.attrib["Name"]  = Name
     App_Data.attrib["Value"] = Value
@@ -184,7 +185,6 @@ class Movie(Media):
         self.Bit_Rate               = u''
 	self.Screen_Format          = u''
 	self.HDContent              = u''
-	self.Audio_Type             = u''
 	self.Viewing_Can_Be_Resumed = u''
 	self.Watermarking           = u''
 	self.Languages              = u''
@@ -201,7 +201,6 @@ class Movie(Media):
         Metadata.append(App_Data_Element(self.App_Data_App, "Type", self.Type))
         Metadata.append(App_Data_Element(self.App_Data_App, "Content_FileSize", self.Content_FileSize))
         Metadata.append(App_Data_Element(self.App_Data_App, "Content_CheckSum", self.Content_CheckSum))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Audio_Type", self.Audio_Type))
         Metadata.append(App_Data_Element(self.App_Data_App, "Resolution", self.Resolution))
         Metadata.append(App_Data_Element(self.App_Data_App, "Frame_Rate", self.Frame_Rate))
         Metadata.append(App_Data_Element(self.App_Data_App, "Codec", self.Codec))
@@ -360,8 +359,8 @@ def Title_fromElement(TitleElement=None):
                 title.Writer_Display = Value
             if Name == "Director":
                 title.Director = Value
-            if Name == "Producer":
-                title.Producer = Value
+            if Name == "Producers":
+                title.Producers = Value
             if Name == "Studio":
                 title.Studio = Value
             if Name == "Category":
@@ -474,8 +473,6 @@ def AssetMedia_fromElement(AssetElement=None):
 			    asset.Screen_Format = Value
 			if Name == "HDContent":
 			    asset.HDContent = Value
-			if Name == "Audio_Type":
-			    asset.Audio_Type = Value
 			if Name == "Viewing_Can_Be_Resumed":
 			    asset.Viewing_Can_Be_Resumed = Value
 			if Name == "Watermarking":
@@ -667,7 +664,7 @@ class Title(object):
         self.Actors_Display = u''
         self.Writer_Display = u''
         self.Director = u''
-        self.Producer = u''
+        self.Producers = u''
         self.Studio = u''
         self.Category = u''
         self.Genre = u''
@@ -710,61 +707,106 @@ class Title(object):
         AMS = AMS_Element(self.AMS)
         Metadata.append(AMS)
 
-        Metadata.append(App_Data_Element(self.App_Data_App, "Title_Sort_Name",self.Title_Sort_Name))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Title_Brief",self.Title_Brief))
+
+	#
+	# Campos Requeridos
+	# 
+	Metadata.append(App_Data_Element(self.App_Data_App, "Type",self.Type))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Title_Brief",self.Title_Brief))
         Metadata.append(App_Data_Element(self.App_Data_App, "Title",self.Title))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Type",self.Type))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Episode_Name",self.Episode_Name))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Episode_ID",self.Episode_ID))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Summary_Long",self.Summary_Long))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Summary_Medium",self.Summary_Medium))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Summary_Short",self.Summary_Short))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Rating",self.Rating))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Advisories",self.Advisories))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Closed_Captioning",self.Closed_Captioning))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Summary_Short",self.Summary_Short))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Rating",self.Rating))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Closed_Captioning",self.Closed_Captioning))
         Metadata.append(App_Data_Element(self.App_Data_App, "Run_Time",self.Run_Time))
         Metadata.append(App_Data_Element(self.App_Data_App, "Display_Run_Time",self.Display_Run_Time))
         Metadata.append(App_Data_Element(self.App_Data_App, "Year",self.Year))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Country_of_Origin",self.Country_of_Origin))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Actors",self.Actors))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Actors_Display",self.Actors_Display))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Writer_Display",self.Writer_Display))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Director",self.Director))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Producer",self.Producer))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Studio",self.Studio))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Category",self.Category))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Category",self.Category))
         Metadata.append(App_Data_Element(self.App_Data_App, "Genre",self.Genre))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Show_Type",self.Show_Type))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Season_Premiere",self.Season_Premiere))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Season_Finale",self.Season_Finale))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Box_Office",self.Box_Office))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Propagation_Priority",self.Propagation_Priority))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Billing_ID",self.Billing_ID))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Show_Type",self.Show_Type))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Billing_ID",self.Billing_ID))
         Metadata.append(App_Data_Element(self.App_Data_App, "Licensing_Window_Start",self.Licensing_Window_Start))
         Metadata.append(App_Data_Element(self.App_Data_App, "Licensing_Window_End",self.Licensing_Window_End))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Preview_Period",self.Preview_Period))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Home_Video_Window",self.Home_Video_Window))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Display_As_New",self.Display_As_New))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Display_As_Last_Chance",self.Display_As_Last_Chance))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Maximum_Viewing_Length",self.Maximum_Viewing_Length))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Provider_QA_Contact",self.Provider_QA_Contact))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Contract_Name",self.Contract_Name))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Suggested_Price",self.Suggested_Price))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Distributor_Royalty_Percent",self.Distributor_Royalty_Percent))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Distributor_Royalty_Minimum",self.Distributor_Royalty_Minimum))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Distributor_Royalty_Flat_Rate",self.Distributor_Royalty_Flat_Rate))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Distributor_Name",self.Distributor_Name))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Studio_Royalty_Percent",self.Studio_Royalty_Percent))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Studio_Royalty_Minimum",self.Studio_Royalty_Minimum))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Studio_Royalty_Flat_Rate",self.Studio_Royalty_Flat_Rate))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Studio_Name",self.Studio_Name))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Studio_Code",self.Studio_Code))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Subscriber_View_Limit",self.Subscriber_View_Limit))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Programmer_Call_Letters",self.Programmer_Call_Letters))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Recording_Artist",self.Recording_Artist))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Song_Title",self.Song_Title))
-        
-        
+	Metadata.append(App_Data_Element(self.App_Data_App, "Preview_Period",self.Preview_Period))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Provider_QA_Contact",self.Provider_QA_Contact))
+
+
+	#
+	# Campos Opcionales
+	#
+	if self.Title_Sort_Name != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Title_Sort_Name",self.Title_Sort_Name))
+        if self.Episode_Name != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Episode_Name",self.Episode_Name))
+        if self.Episode_ID != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Episode_ID",self.Episode_ID))
+	if self.Summary_Long != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Summary_Long",self.Summary_Long))
+	if self.Summary_Medium != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Summary_Medium",self.Summary_Medium))
+	if self.Advisories != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Advisories",self.Advisories))
+	if self.Country_of_Origin != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Country_of_Origin",self.Country_of_Origin))
+	if self.Actors != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Actors",self.Actors))
+	if self.Actors_Display != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Actors_Display",self.Actors_Display))
+	if self.Writer_Display != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Writer_Display",self.Writer_Display))
+	if self.Director != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Director",self.Director))
+	if self.Producers != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Producers",self.Producers))
+	if self.Studio != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Studio",self.Studio))
+	if self.Season_Premiere != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Season_Premiere",self.Season_Premiere))
+	if self.Season_Finale != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Season_Finale",self.Season_Finale))
+	if self.Box_Office != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Box_Office",self.Box_Office))
+	if self.Propagation_Priority != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Propagation_Priority",self.Propagation_Priority))
+	if self.Home_Video_Window != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Home_Video_Window",self.Home_Video_Window))
+	if self.Display_As_New != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Display_As_New",self.Display_As_New))
+	if self.Display_As_Last_Chance != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Display_As_Last_Chance",self.Display_As_Last_Chance))
+	if self.Maximum_Viewing_Length != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Maximum_Viewing_Length",self.Maximum_Viewing_Length))
+	if self.Contract_Name != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Contract_Name",self.Contract_Name))
+        if self.Suggested_Price != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Suggested_Price",self.Suggested_Price))
+        if self.Distributor_Royalty_Percent != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Distributor_Royalty_Percent",self.Distributor_Royalty_Percent))
+        if self.Distributor_Royalty_Minimum != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Distributor_Royalty_Minimum",self.Distributor_Royalty_Minimum))
+        if self.Distributor_Royalty_Flat_Rate != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Distributor_Royalty_Flat_Rate",self.Distributor_Royalty_Flat_Rate))
+	if self.Distributor_Name != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Distributor_Name",self.Distributor_Name))
+        if self.Studio_Royalty_Percent != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Studio_Royalty_Percent",self.Studio_Royalty_Percent))
+        if self.Studio_Royalty_Minimum != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Studio_Royalty_Minimum",self.Studio_Royalty_Minimum))
+        if self.Studio_Royalty_Flat_Rate != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Studio_Royalty_Flat_Rate",self.Studio_Royalty_Flat_Rate))
+        if self.Studio_Name != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Studio_Name",self.Studio_Name))
+	if self.Studio_Code != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Studio_Code",self.Studio_Code))
+	if self.Subscriber_View_Limit != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Subscriber_View_Limit",self.Subscriber_View_Limit))
+	if self.Programmer_Call_Letters != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Programmer_Call_Letters",self.Programmer_Call_Letters))
+	if self.Recording_Artist != '':
+            Metadata.append(App_Data_Element(self.App_Data_App, "Recording_Artist",self.Recording_Artist))
+    	if self.Song_Title != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Song_Title",self.Song_Title))
+
+
         Asset.append(Metadata)
         return Asset
 
