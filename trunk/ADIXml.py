@@ -200,15 +200,29 @@ class Movie(Media):
         AMS = AMS_Element(self.AMS)
         Metadata.append(AMS)
 
+	#
+	# Campos de Metadata Obligatorios
+	#
+
         Metadata.append(App_Data_Element(self.App_Data_App, "Type", self.Type))
 	Metadata.append(App_Data_Element(self.App_Data_App, "Audio_Type", self.Audio_Type))
         Metadata.append(App_Data_Element(self.App_Data_App, "Content_FileSize", self.Content_FileSize))
         Metadata.append(App_Data_Element(self.App_Data_App, "Content_CheckSum", self.Content_CheckSum))
         Metadata.append(App_Data_Element(self.App_Data_App, "Resolution", self.Resolution))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Frame_Rate", self.Frame_Rate))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Codec", self.Codec))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Bit_Rate", self.Bit_Rate))
-	
+
+	#
+	# Campos de Metadata Obligatorios pero agregados en 2009 (Algunas plataformas no lo soportan) 
+	#
+	if self.Frame_Rate != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Frame_Rate", self.Frame_Rate))
+	if self.Codec != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Codec", self.Codec))
+        if self.Bit_Rate != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Bit_Rate", self.Bit_Rate))
+
+	#
+	# Campos de Metadata Opcionales
+	#
 	if self.Screen_Format != '':
 	    Metadata.append(App_Data_Element(self.App_Data_App, "Screen_Format", self.Screen_Format))
         if self.Viewing_Can_Be_Resumed != '':
