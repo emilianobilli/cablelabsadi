@@ -214,7 +214,7 @@ class Movie(Media):
 	    Metadata.append(App_Data_Element(self.App_Data_App, "Viewing_Can_Be_Resumed", self.Viewing_Can_Be_Resumed))
         if self.Watermarking != '':
 	    Metadata.append(App_Data_Element(self.App_Data_App, "Watermarking", self.Watermarking))
-        if self.Language != '':
+        if self.Languages != '':
 	    Metadata.append(App_Data_Element(self.App_Data_App, "Languages", self.Languages))
         if self.Copy_Protection != '':
 	    Metadata.append(App_Data_Element(self.App_Data_App, "Copy_Protection", self.Copy_Protection))
