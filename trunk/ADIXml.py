@@ -198,20 +198,26 @@ class Movie(Media):
 
         AMS = AMS_Element(self.AMS)
         Metadata.append(AMS)
+
         Metadata.append(App_Data_Element(self.App_Data_App, "Type", self.Type))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Audio_Type", self.Audio_Type))
         Metadata.append(App_Data_Element(self.App_Data_App, "Content_FileSize", self.Content_FileSize))
         Metadata.append(App_Data_Element(self.App_Data_App, "Content_CheckSum", self.Content_CheckSum))
         Metadata.append(App_Data_Element(self.App_Data_App, "Resolution", self.Resolution))
         Metadata.append(App_Data_Element(self.App_Data_App, "Frame_Rate", self.Frame_Rate))
         Metadata.append(App_Data_Element(self.App_Data_App, "Codec", self.Codec))
         Metadata.append(App_Data_Element(self.App_Data_App, "Bit_Rate", self.Bit_Rate))
-	Metadata.append(App_Data_Element(self.App_Data_App, "Screen_Format", self.Screen_Format))
-        Metadata.append(App_Data_Element(self.App_Data_App, "HDContent", self.HDContent))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Audio_Type", self.Audio_Type))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Viewing_Can_Be_Resumed", self.Viewing_Can_Be_Resumed))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Watermarking", self.Watermarking))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Languages", self.Languages))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Copy_Protection", self.Copy_Protection))
+	
+	if self.Screen_Format != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Screen_Format", self.Screen_Format))
+        if self.Viewing_Can_Be_Resumed != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Viewing_Can_Be_Resumed", self.Viewing_Can_Be_Resumed))
+        if self.Watermarking != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Watermarking", self.Watermarking))
+        if self.Language != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Languages", self.Languages))
+        if self.Copy_Protection != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Copy_Protection", self.Copy_Protection))
        
 
 
