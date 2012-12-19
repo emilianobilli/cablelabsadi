@@ -253,16 +253,26 @@ def Package_fromADIFile(ADIFile=None):
 
     return None
 
-def Package_toADIFile(package=None, ADIFile=None):
+def Package_toADIFile(package=None, ADIFile=None, Version='1.1'):
     if package is not None:
+	#
+	# Bug a corregir
+	#
+	package.AMS.Asset_Name = package.AMS.Asset_Name + '_package'
+	#
+	# End Bug
+	#
         ADIElement = package.AdiElement()
         if ADIElement is not None:
 	    indent(ADIElement)
             AdiString = tostring(ADIElement, encoding="ISO-8859-1")
 	    if ADIFile is not None:
-        	fd = open(ADIFile, "wb")
-        	fd.write(AdiString)
-		fd.close()
+        	if Version == '1.1':
+		    fd = open(ADIFile, "wb")
+        	    fd.write(AdiString)
+		    fd.close()
+		    return True
+		
 	    else:
 		return AdiString
             
@@ -298,6 +308,7 @@ def Package_fromElement(ADIElement=None):
                 package.Provider_Content_Tier = Value
 
         TitleElement = ADIElement.find("Asset")
+
 
         package.Title = Title_fromElement(TitleElement)
 
@@ -552,7 +563,7 @@ class Package(object):
                  App_Data_App  = None, toBuild=True):
 
         if toBuild == True:
-            self.AMS = AMS("PACKAGE")
+            self.AMS = AMS("package")
             self.AMS.Provider      = Provider
             self.AMS.Product       = Product
             self.AMS.Asset_Name    = Asset_Name
@@ -586,7 +597,8 @@ class Package(object):
         AMS = AMS_Element(self.AMS)
         Metadata.append(AMS)
         Metadata.append(App_Data_Element(self.App_Data_App, "Metadata_Spec_Version", self.Metadata_Spec_Version))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Provider_Content_Tier", self.Provider_Content_Tier))
+	if self.Provider_Content_Tier != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Provider_Content_Tier", self.Provider_Content_Tier))
 
         ADI.append(Metadata)
         if self.Title is not None:
@@ -656,6 +668,12 @@ class Package(object):
         self.AddStillImage("box_cover")
 
 
+class CustomMetadata(object):
+    def __init__(self, Name = None, Value = None):
+	self.Name  = Name
+	self.Value = Value
+
+
 class Title(object):
     def __init__(self,App_Data_App=None, toBuild=True):
         if toBuild == False:
@@ -720,6 +738,15 @@ class Title(object):
         self.Song_Title = u''
         
 
+	self.Custom_Metadata = []
+
+    #
+    # Agrega Metadata que no existe en Cablelabs --- HardCode ---
+    #
+    def AddCustomMetadata(self, Name = None, Value = None):
+	if Name is not None and Value is not None:
+	    self.Custom_Metadata.append(CustomMetadata(Name,Value))
+
     def AssetElement(self):
 
         Asset    = Element("Asset")
@@ -727,6 +754,13 @@ class Title(object):
         Metadata = Element("Metadata")
         AMS = AMS_Element(self.AMS)
         Metadata.append(AMS)
+
+
+	#
+	# Custom Metadata
+	#
+	for CM in self.Custom_Metadata:
+	    Metadata.append(App_Data_Element(self.App_Data_App, CM.Name, CM.Value))
 
 
 	#
