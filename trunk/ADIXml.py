@@ -208,11 +208,15 @@ class Movie(Media):
 	Metadata.append(App_Data_Element(self.App_Data_App, "Audio_Type", self.Audio_Type))
         Metadata.append(App_Data_Element(self.App_Data_App, "Content_FileSize", self.Content_FileSize))
         Metadata.append(App_Data_Element(self.App_Data_App, "Content_CheckSum", self.Content_CheckSum))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Resolution", self.Resolution))
+
+
+        
 
 	#
 	# Campos de Metadata Obligatorios pero agregados en 2009 (Algunas plataformas no lo soportan) 
 	#
+	if self.Resolution != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Resolution", self.Resolution))
 	if self.Frame_Rate != '':
     	    Metadata.append(App_Data_Element(self.App_Data_App, "Frame_Rate", self.Frame_Rate))
 	if self.Codec != '':
@@ -757,7 +761,7 @@ class Title(object):
 
 
 	#
-	# Custom Metadata
+	# Custom Metadata ??? Agregale tu campo custom al XML
 	#
 	for CM in self.Custom_Metadata:
 	    Metadata.append(App_Data_Element(self.App_Data_App, CM.Name, CM.Value))
