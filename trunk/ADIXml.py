@@ -138,6 +138,8 @@ class Media(object):
         self.Content_CheckSum = u''
         self.Content_Value    = u''
 
+	self.Custom_Metadata = []
+
 
 class StillImage(Media):
     def __init__(self, Asset_Class=None, App_Data_App=None, toBuild=True):
@@ -155,6 +157,13 @@ class StillImage(Media):
         Metadata.append(App_Data_Element(self.App_Data_App, "Type", self.Type))
         Metadata.append(App_Data_Element(self.App_Data_App, "Content_FileSize", self.Content_FileSize))
         Metadata.append(App_Data_Element(self.App_Data_App, "Content_CheckSum", self.Content_CheckSum))
+	
+		#
+	# Custom Metadata ??? Agregale tu campo custom al XML
+	#
+	for CM in self.Custom_Metadata:
+	    Metadata.append(App_Data_Element(self.App_Data_App, CM.Name, CM.Value))
+	
 	if self.Image_Aspect_Ratio != '':
     	    Metadata.append(App_Data_Element(self.App_Data_App, "Image_Aspect_Ratio", self.Image_Aspect_Ratio))
 
@@ -165,6 +174,9 @@ class StillImage(Media):
 
         return Asset
 
+    def AddCustomMetadata(self, Name = None, Value = None):
+	if Name is not None and Value is not None:
+	    self.Custom_Metadata.append(CustomMetadata(Name,Value))
 
 class Poster(StillImage):
     def __init__(self, App_Data_App=None, toBuild=True):
@@ -185,12 +197,17 @@ class Movie(Media):
         self.Codec                  = u'' 
         self.Bit_Rate               = u''
 	self.Screen_Format          = u''
-	self.HDContent              = u''
 	self.Viewing_Can_Be_Resumed = u''
 	self.Watermarking           = u''
 	self.Languages              = u''
 	self.Copy_Protection        = u''
 	
+
+
+    def AddCustomMetadata(self, Name = None, Value = None):
+	if Name is not None and Value is not None:
+	    self.Custom_Metadata.append(CustomMetadata(Name,Value))
+
 
     def AssetElement(self):
         Asset    = Element("Asset")
@@ -210,9 +227,14 @@ class Movie(Media):
         Metadata.append(App_Data_Element(self.App_Data_App, "Content_CheckSum", self.Content_CheckSum))
 
 
-        
-
 	#
+	# Custom Metadata ??? Agregale tu campo custom al XML
+	#
+	for CM in self.Custom_Metadata:
+	    Metadata.append(App_Data_Element(self.App_Data_App, CM.Name, CM.Value))
+
+
+        #
 	# Campos de Metadata Obligatorios pero agregados en 2009 (Algunas plataformas no lo soportan) 
 	#
 	if self.Resolution != '':
@@ -257,7 +279,7 @@ def Package_fromADIFile(ADIFile=None):
 
     return None
 
-def Package_toADIFile(package=None, ADIFile=None, Version='1.1'):
+def Package_toADIFile(package=None, ADIFile=None, Version='1.1', doctype=None):
     if package is not None:
 	#
 	# Bug a corregir
@@ -269,7 +291,7 @@ def Package_toADIFile(package=None, ADIFile=None, Version='1.1'):
         ADIElement = package.AdiElement()
         if ADIElement is not None:
 	    indent(ADIElement)
-            AdiString = tostring(ADIElement, encoding="ISO-8859-1")
+            AdiString = tostring(ADIElement, encoding="ISO-8859-1", doctype=doctype)
 	    if ADIFile is not None:
         	if Version == '1.1':
 		    fd = open(ADIFile, "wb")
@@ -507,8 +529,6 @@ def AssetMedia_fromElement(AssetElement=None):
                             asset.Bit_Rate = Value
 			if Name == "Screen_Format":
 			    asset.Screen_Format = Value
-			if Name == "HDContent":
-			    asset.HDContent = Value
 			if Name == "Viewing_Can_Be_Resumed":
 			    asset.Viewing_Can_Be_Resumed = Value
 			if Name == "Watermarking":
