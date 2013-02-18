@@ -3,18 +3,18 @@ from xml.etree.ElementTree import *
 
 
 
-class RiGTHvAssets(object):
+class RiGHTvAssets(object):
     def __init__(self):
 	self.VideoAssets = VideoAssets()
 
     def ToElement(self):
-	RiGTHvAssets = Element("RiGTHAssets")
-	RiGTHvAssets.attrib["xmlns"] = "http://www.orca.tv/RiGHTv/5.1/Asset"
-	RiGTHvAssets.attrib["xmlns:xsi"] = "http://www.w3.org/2001/XMLSchema-instance"
-	RiGTHvAssets.attrib["xsi:schemaLocation"] = "http://www.orca.tv/RiGHTv/5.1/AssetRiGHTvAsset.xsd"
+	RiGHTvAssets = Element("RiGHTAssets")
+	RiGHTvAssets.attrib["xmlns"] = "http://www.orca.tv/RiGHTv/5.1/Asset"
+	RiGHTvAssets.attrib["xmlns:xsi"] = "http://www.w3.org/2001/XMLSchema-instance"
+	RiGHTvAssets.attrib["xsi:schemaLocation"] = "http://www.orca.tv/RiGHTv/5.1/AssetRiGHTvAsset.xsd"
 
-	RiGTHvAssets.append(self.VideoAssets.ToElement())
-	return RiGTHvAssets
+	RiGHTvAssets.append(self.VideoAssets.ToElement())
+	return RiGHTvAssets
 
 
 class LicensingWindow(object):
@@ -48,7 +48,7 @@ class VideoAssets(object):
 	ExtraField = Element("ExtraField")
 	ExtraField.attrib["Name"] = Name
 	ExtraField.attrib["Value"] = Value
-	ExtraFields.append(ExtraField)
+	self.ExtraFields.append(ExtraField)
 
     def ToElement(self):
 
