@@ -8,7 +8,7 @@ class RiGHTvAssets(object):
 	self.VideoAssets = VideoAssets()
 
     def ToElement(self):
-	RiGHTvAssets = Element("RiGHTAssets")
+	RiGHTvAssets = Element("RiGHTvAssets")
 	RiGHTvAssets.attrib["xmlns"] = "http://www.orca.tv/RiGHTv/5.1/Asset"
 	RiGHTvAssets.attrib["xmlns:xsi"] = "http://www.w3.org/2001/XMLSchema-instance"
 	RiGHTvAssets.attrib["xsi:schemaLocation"] = "http://www.orca.tv/RiGHTv/5.1/AssetRiGHTvAsset.xsd"
@@ -24,8 +24,8 @@ class LicensingWindow(object):
 
     def ToElement(self):
 	LicensingWindow = Element("LicensingWindow")
-	LicensingWindow.attrib["StartDateTime"] = self.StartDateTime
 	LicensingWindow.attrib["EndDateTime"]	= self.EndDateTime
+	LicensingWindow.attrib["StartDateTime"] = self.StartDateTime
 
 	return LicensingWindow
 
@@ -78,7 +78,7 @@ class VideoAssets(object):
 	VideoAsset.append(ParentalRating)
 	VideoAsset.append(Advisories)
 	VideoAsset.append(self.LicensingWindow.ToElement())
-	VideoAsset.append(self.PosterFiles.ToElement())
+#	VideoAsset.append(self.PosterFiles.ToElement())
 	VideoAsset.append(AMSPath)
 	VideoAsset.append(ExtraFields)
 	VideoAsset.append(self.MediaFiles.ToElement())
@@ -151,13 +151,16 @@ class MediaFiles(object):
 	MediaFiles	= Element("MediaFiles")
 	MediaFile	= Element("MediaFile")
 
+	MediaFile.attrib['Encoding'] = self.Encoding
+	MediaFile.attrib['FileName'] = self.FileName
+	
 	TransferURL	= Element("TransferURL")
 	TransferURL.text= self.TransferURL
 
 	RunTime		= Element("RunTime")
 	RunTime.text	= self.RunTime
 
-	BitRate		= Element("BitRate")
+	BitRate		= Element("Bitrate")
 	BitRate.text	= self.BitRate
     
 	Encryption	= Element("Encryption")
@@ -195,7 +198,7 @@ def toAdiFile(Element=None, FileName=None):
     if Element is not None and FileName is not None:
 	element = Element.ToElement()
 	indent(element)
-	string = tostring(element, encoding="ISO-8859-1")
+	string = tostring(element, encoding="UTF-8")
 	fd = open(FileName, "wb")
 	fd.write(string)
 	fd.close()

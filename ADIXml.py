@@ -25,12 +25,19 @@ def indent(elem, level=0):
 #
 # Retorna: El Elemento creado
 #
-def App_Data_Element(App=u'', Name=u'', Value=u''):
+def App_Data_Element(App=u'', Name=u'', Value=u'', Target_Language=u'', Target_Country=u''):
     App_Data = Element("App_Data")
     
     App_Data.attrib["App"]   = App
-    App_Data.attrib["Name"]  = Name
+    if Target_Language != '':
+	App_Data.attrib["Target_Language"] = Target_Language
+
+    if Target_Country  != '':
+	App.Data.attrib["Target_Country"]  = Target_Country
+    App_Data.attrib["Name"]  = Name    
     App_Data.attrib["Value"] = Value
+
+
     return App_Data
 
 #
@@ -162,7 +169,7 @@ class StillImage(Media):
 	# Custom Metadata ??? Agregale tu campo custom al XML
 	#
 	for CM in self.Custom_Metadata:
-	    Metadata.append(App_Data_Element(self.App_Data_App, CM.Name, CM.Value))
+	    Metadata.append(App_Data_Element(self.App_Data_App, CM.Name, CM.Value, CM.Target_Language, CM.Target_Contry))
 	
 	if self.Image_Aspect_Ratio != '':
     	    Metadata.append(App_Data_Element(self.App_Data_App, "Image_Aspect_Ratio", self.Image_Aspect_Ratio))
@@ -174,9 +181,9 @@ class StillImage(Media):
 
         return Asset
 
-    def AddCustomMetadata(self, Name = None, Value = None):
+    def AddCustomMetadata(self, Name = None, Value = None, Target_Language=u'', Target_Country=u''):
 	if Name is not None and Value is not None:
-	    self.Custom_Metadata.append(CustomMetadata(Name,Value))
+	    self.Custom_Metadata.append(CustomMetadata(Name,Value,Target_Language, Target_Country))
 
 class Poster(StillImage):
     def __init__(self, App_Data_App=None, toBuild=True):
@@ -204,9 +211,9 @@ class Movie(Media):
 	
 
 
-    def AddCustomMetadata(self, Name = None, Value = None):
+    def AddCustomMetadata(self, Name = None, Value = None, Target_Language=u'', Target_Country=u''):
 	if Name is not None and Value is not None:
-	    self.Custom_Metadata.append(CustomMetadata(Name,Value))
+	    self.Custom_Metadata.append(CustomMetadata(Name,Value, Target_Language, Target_Country))
 
 
     def AssetElement(self):
@@ -231,7 +238,7 @@ class Movie(Media):
 	# Custom Metadata ??? Agregale tu campo custom al XML
 	#
 	for CM in self.Custom_Metadata:
-	    Metadata.append(App_Data_Element(self.App_Data_App, CM.Name, CM.Value))
+	    Metadata.append(App_Data_Element(self.App_Data_App, CM.Name, CM.Value, CM.Target_Language, CM.Target_Country))
 
 
         #
@@ -693,10 +700,11 @@ class Package(object):
 
 
 class CustomMetadata(object):
-    def __init__(self, Name = None, Value = None):
+    def __init__(self, Name = None, Value = None, Target_Language = u'', Target_Country = u''):
 	self.Name  = Name
 	self.Value = Value
-
+	self.Target_Language = Target_Language
+	self.Target_Country  = Target_Country	
 
 class Title(object):
     def __init__(self,App_Data_App=None, toBuild=True):
@@ -767,9 +775,9 @@ class Title(object):
     #
     # Agrega Metadata que no existe en Cablelabs --- HardCode ---
     #
-    def AddCustomMetadata(self, Name = None, Value = None):
+    def AddCustomMetadata(self, Name = None, Value = None, Target_Language =u'', Target_Country = u''):
 	if Name is not None and Value is not None:
-	    self.Custom_Metadata.append(CustomMetadata(Name,Value))
+	    self.Custom_Metadata.append(CustomMetadata(Name,Value, Target_Language, Target_Country))
 
     def AssetElement(self):
 
@@ -784,7 +792,7 @@ class Title(object):
 	# Custom Metadata ??? Agregale tu campo custom al XML
 	#
 	for CM in self.Custom_Metadata:
-	    Metadata.append(App_Data_Element(self.App_Data_App, CM.Name, CM.Value))
+	    Metadata.append(App_Data_Element(self.App_Data_App, CM.Name, CM.Value, CM.Target_Language, CM.Target_Country))
 
 
 	#
@@ -802,7 +810,6 @@ class Title(object):
 	Metadata.append(App_Data_Element(self.App_Data_App, "Category",self.Category))
         Metadata.append(App_Data_Element(self.App_Data_App, "Genre",self.Genre))
 	Metadata.append(App_Data_Element(self.App_Data_App, "Show_Type",self.Show_Type))
-	Metadata.append(App_Data_Element(self.App_Data_App, "Billing_ID",self.Billing_ID))
         Metadata.append(App_Data_Element(self.App_Data_App, "Licensing_Window_Start",self.Licensing_Window_Start))
         Metadata.append(App_Data_Element(self.App_Data_App, "Licensing_Window_End",self.Licensing_Window_End))
 	Metadata.append(App_Data_Element(self.App_Data_App, "Preview_Period",self.Preview_Period))
@@ -812,6 +819,8 @@ class Title(object):
 	#
 	# Campos Opcionales
 	#
+	if self.Billing_ID != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Billing_ID", self.Billing_ID))
 	if self.Title_Sort_Name != '':
     	    Metadata.append(App_Data_Element(self.App_Data_App, "Title_Sort_Name",self.Title_Sort_Name))
         if self.Episode_Name != '':
