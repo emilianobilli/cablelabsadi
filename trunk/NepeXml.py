@@ -37,7 +37,7 @@ class NepeXml(object):
 	ContentType = Element('ContentType')
 	Title       = Element('Title')
 	OriginalTitle   = Element('OriginalTitle')
-	ShotDescription = Element('ShotDescription')
+	ShortDescription = Element('ShortDescription')
 	LongDescription = Element('LongDescription')
 	Country     = Element('Country')
 	Actors      = Element('Actors')
@@ -60,7 +60,7 @@ class NepeXml(object):
 	ContentType.text = self.ContentType
 	Title.text       = self.Title
 	OriginalTitle.text   = self.OriginalTitle
-	ShotDescription.text = self.ShotDescription
+	ShortDescription.text = self.ShortDescription
 	LongDescription.text = self.LongDescription
 	Country.text     = self.Country
 	Actors.text      = self.Actors
@@ -83,7 +83,7 @@ class NepeXml(object):
 	NepeXml.append(ContentType)
 	NepeXml.append(Title)
 	NepeXml.append(OriginalTitle)
-	NepeXml.append(ShotDescription)
+	NepeXml.append(ShortDescription)
 	NepeXml.append(LongDescription)
 	NepeXml.append(Country)
 	NepeXml.append(Actors)
@@ -131,9 +131,11 @@ def fromAdiFile(FileName=None):
     if FileName is not None:
 	
 	Element = parse(FileName)
+	dump(Element)
 	Nepe = NepeXml()
 	if Element is not None:
 	    ItemID = Element.find("ItemID")
+	    dump(ItemID)
 	    if ItemID is not None:
 		Nepe.ItemID = ItemID.text 
 	    ItemID = Element.find("ItemID") 
@@ -160,9 +162,9 @@ def fromAdiFile(FileName=None):
 	    OriginalTitle = Element.find("OriginalTitle")
 	    if OriginalTitle is not None:
 		Nepe.OriginalTitle = OriginalTitle.text
-	    ShotDescription = Element.find("ShotDescription")
-	    if ShotDescription is not None:
-		Nepe.ShotDescription = ShotDescription.text
+	    ShortDescription = Element.find("ShortDescription")
+	    if ShortDescription is not None:
+		Nepe.ShortDescription = ShortDescription.text
 	    LongDescription = Element.find("LongDescription")
 	    if LongDescription is not None:
 		Nepe.LongDescription = LongDescription.text
@@ -202,3 +204,5 @@ def fromAdiFile(FileName=None):
 	    VideoFormat = Element.find("VideoFormat")
 	    if VideoFormat is not None:
 		Nepe.VideoFormat = VideoFormat.text
+
+	return Nepe
