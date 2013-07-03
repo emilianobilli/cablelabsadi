@@ -78,6 +78,7 @@ class AssetData(object):
 	assetData.append(self.images.ToElement())
 	assetData.append(self.ratings.ToElement())
 	assetData.append(self.genres.ToElement())
+	assetData.append(self.chapters.ToElement())
 
 	return assetData
 
@@ -105,7 +106,7 @@ class Data (object):
 	self.cast=''
 	self.awards=''
 	self.label=''
-	self.contractror=''
+	self.contractor=''
 
 
     def ToElement(self):
@@ -131,7 +132,7 @@ class Data (object):
 	cast=Element("cast")
 	awards=Element("awards")
 	label=Element("label")
-	contractror=Element("contractror")
+	contractor=Element("contractor")
 
 
 	title.text="<![CDATA[ " + self.title+" ]]>"
@@ -156,7 +157,7 @@ class Data (object):
 	cast.text="<![CDATA[ " + self.cast+" ]]>"
 	awards.text="<![CDATA[ " + self.awards+" ]]>"
 	label.text="<![CDATA[ " + self.label+" ]]>"
-	contractror.text="<![CDATA[ " + self.contractror+" ]]>"
+	contractor.text="<![CDATA[ " + self.contractor+" ]]>"
 
 	data= Element("data")
 	data.append(title)
@@ -181,7 +182,7 @@ class Data (object):
 	data.append(cast)
 	data.append(awards)
 	data.append(label)
-	data.append(contractror)
+	data.append(contractor)
 
 	return data
 
@@ -205,7 +206,7 @@ class Ratings(object):
 	Action	= Element("action")
 	Erotic	= Element("erotic")
 	Tension	= Element("tension")
-	Emotion	= Element("Emotion")
+	Emotion	= Element("emotion")
 
 	General.text 	= self.general
 	Fun.text	= self.fun
@@ -311,15 +312,15 @@ class Asset (object):
 
 class Chapter(object):
     def __init__(self,no='',title='',timecode=''):
-	self.no = no
-	self.title = title
-	self.timecode
+	self.no       = no
+	self.title    = title
+	self.timecode = timecode
 
     def ToElement(self):
 	chapter = Element("chapter")
 	chapter.attrib["no"] = self.no
 	title	= Element("title")
-	tile.text = "<![CDATA[ " + self.title + "]]>"
+	title.text = "<![CDATA[ " + self.title + "]]>"
 	timecode = Element("timecode")
 	timecode.text = self.timecode
 
