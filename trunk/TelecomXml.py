@@ -76,9 +76,10 @@ class AssetData(object):
 	assetData.attrib["lang"] = self.lang
 	assetData.append(self.data.ToElement())
 	assetData.append(self.images.ToElement())
+	assetData.append(self.chapters.ToElement())
 	assetData.append(self.ratings.ToElement())
 	assetData.append(self.genres.ToElement())
-	assetData.append(self.chapters.ToElement())
+	
 
 	return assetData
 
@@ -95,7 +96,7 @@ class Data (object):
 	self.distribution=''
 	self.releaseDateCinema=''
 	self.eanCode=''
-	self.isChildrenMovie=''
+	self.isChildrensMovie=''
 	self.country=''
 	self.year=''
 	self.runtime=''
@@ -121,7 +122,7 @@ class Data (object):
 	distribution=Element("distribution")
 	releaseDateCinema=Element("releaseDateCinema")
 	eanCode=Element("eanCode")
-	isChildrenMovie=Element("isChildrenMovie")
+	isChildrensMovie=Element("isChildrensMovie")
 	country=Element("country")
 	year=Element("year")
 	runtime=Element("runtime")
@@ -144,9 +145,9 @@ class Data (object):
 	links.text="<![CDATA[ " + self.links+" ]]>"
 	copyright.text="<![CDATA[ " + self.copyright+" ]]>"
 	distribution.text="<![CDATA[ " + self.distribution+" ]]>"
-	releaseDateCinema.text="<![CDATA[ " + self.releaseDateCinema+" ]]>"
+	releaseDateCinema.text="<![CDATA[" + self.releaseDateCinema+"]]>"
 	eanCode.text="<![CDATA[ " + self.eanCode+" ]]>"
-	isChildrenMovie.text = self.isChildrenMovie
+	isChildrensMovie.text = self.isChildrensMovie
 	country.text="<![CDATA[ " + self.country+" ]]>"
 	year.text="<![CDATA[ " + self.year+" ]]>"
 	runtime.text = self.runtime
@@ -171,10 +172,10 @@ class Data (object):
 	data.append(distribution)
 	data.append(releaseDateCinema)
 	data.append(eanCode)
-	data.append(isChildrenMovie)
+	data.append(isChildrensMovie)
 	data.append(country)
-	data.append(runtime)
 	data.append(year)
+	data.append(runtime)
 	data.append(productionCompany)
 	data.append(producer)
 	data.append(director)
