@@ -1,4 +1,4 @@
-from xml.etree.ElementTree import *
+from ElementTree import *
 
 
 def indent(elem, level=0):
@@ -193,6 +193,56 @@ class BoxCover(StillImage):
     def __init__(self, App_Data_App=None, toBuild=True):
         super(BoxCover,self).__init__("box cover", App_Data_App, toBuild)
 
+
+class Preview(Media):
+    def __init__(self, App_Data_App=None, toBuild=True):
+	super(Preview,self).__init__("preview", App_Data_App, toBuild)
+	self.Audio_Type		    = u''
+	self.Resolution		    = u''
+	self.Frame_Rate		    = u''
+	self.Codec		    = u''
+	self.Bit_Rate		    = u''
+	self.Run_Time		    = u''
+	self.Rating		    = u''
+	
+    def AssetElement(self):
+        Asset    = Element("Asset")
+        Content  = Element("Content")
+        Metadata = Element("Metadata")
+
+        AMS = AMS_Element(self.AMS)
+        Metadata.append(AMS)
+
+	#
+	# Campos de Metadata Obligatorios
+	#
+
+        Metadata.append(App_Data_Element(self.App_Data_App, "Type", self.Type))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Audio_Type", self.Audio_Type))
+        Metadata.append(App_Data_Element(self.App_Data_App, "Content_FileSize", self.Content_FileSize))
+        Metadata.append(App_Data_Element(self.App_Data_App, "Content_CheckSum", self.Content_CheckSum))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Rating", self.Rating))
+
+        #
+	# Campos de Metadata Obligatorios pero agregados en 2009 (Algunas plataformas no lo soportan) 
+	#
+	if self.Resolution != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Resolution", self.Resolution))
+	if self.Frame_Rate != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Frame_Rate", self.Frame_Rate))
+	if self.Codec != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Codec", self.Codec))
+        if self.Bit_Rate != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Bit_Rate", self.Bit_Rate))
+	if self.Run_Time != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Run_Time", self.Run_Time))
+	    
+	Content.attrib["Value"] = self.Content_Value
+        
+        Asset.append(Metadata)
+        Asset.append(Content)
+
+	return Asset
 
 
 class Movie(Media):
@@ -616,9 +666,12 @@ class Package(object):
 
         self.Title = None
 
+	self.Preview = None
+
         self.Movie = None
 
         self.StillImage = None
+
 
 
     def AdiElement(self):
@@ -643,11 +696,26 @@ class Package(object):
                 Asset_Image = self.StillImage.AssetElement()
                 Asset_Title.append(Asset_Image)
 
+	    if self.Preview is not None:
+		Asset_Preview = self.Preview.AssetElement()
+		Asset_Title.append(Asset_Preview)
 
             ADI.append(Asset_Title)
         
         
         return ADI
+
+    
+    def AddPreview(self):
+	self.Preview = Preview(self.App_Data_App)
+
+	self.Preview.AMS.Provider      = self.AMS.Provider
+        self.Preview.AMS.Product       = self.AMS.Product
+        self.Preview.AMS.Asset_Name    = self.AMS.Asset_Name + "_preview"
+        self.Preview.AMS.Description   = self.AMS.Description
+        self.Preview.AMS.Creation_Date = self.AMS.Creation_Date
+        self.Preview.AMS.Provider_ID   = self.AMS.Provider_ID
+        self.Preview.AMS.Asset_ID      = self.AMS.Asset_ID
 
         
 
