@@ -79,7 +79,7 @@ class AssetData(object):
 	assetData.append(self.chapters.ToElement())
 	assetData.append(self.ratings.ToElement())
 	assetData.append(self.genres.ToElement())
-	
+
 
 	return assetData
 
@@ -145,7 +145,7 @@ class Data (object):
 	links.text="<![CDATA[ " + self.links+" ]]>"
 	copyright.text="<![CDATA[ " + self.copyright+" ]]>"
 	distribution.text="<![CDATA[ " + self.distribution+" ]]>"
-	releaseDateCinema.text="<![CDATA[" + self.releaseDateCinema+"]]>"
+	#releaseDateCinema.text="<![CDATA[ " + self.releaseDateCinema+" ]]>"
 	eanCode.text="<![CDATA[ " + self.eanCode+" ]]>"
 	isChildrensMovie.text = self.isChildrensMovie
 	country.text="<![CDATA[ " + self.country+" ]]>"
@@ -170,7 +170,7 @@ class Data (object):
 	data.append(links)
 	data.append(copyright)
 	data.append(distribution)
-	data.append(releaseDateCinema)
+#	data.append(releaseDateCinema)
 	data.append(eanCode)
 	data.append(isChildrensMovie)
 	data.append(country)
@@ -186,6 +186,7 @@ class Data (object):
 	data.append(contractor)
 
 	return data
+
 
 
 
@@ -207,21 +208,21 @@ class Ratings(object):
 	Action	= Element("action")
 	Erotic	= Element("erotic")
 	Tension	= Element("tension")
-	Emotion	= Element("emotion")
+	emotion	= Element("emotion")
 
 	General.text 	= self.general
 	Fun.text	= self.fun
 	Action.text	= self.action
 	Erotic.text	= self.erotic
 	Tension.text	= self.tension
-	Emotion.text	= self.emotion
+	emotion.text	= self.emotion
 
 	Ratings.append(General)
 	Ratings.append(Fun)
 	Ratings.append(Action)
 	Ratings.append(Erotic)
 	Ratings.append(Tension)
-	Ratings.append(Emotion)
+	Ratings.append(emotion)
 
 	return Ratings
 
