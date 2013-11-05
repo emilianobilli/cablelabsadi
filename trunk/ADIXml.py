@@ -33,7 +33,7 @@ def App_Data_Element(App=u'', Name=u'', Value=u'', Target_Language=u'', Target_C
 	App_Data.attrib["Target_Language"] = Target_Language
 
     if Target_Country  != '':
-	App.Data.attrib["Target_Country"]  = Target_Country
+	App_Data.attrib["Target_Country"]  = Target_Country
     App_Data.attrib["Name"]  = Name    
     App_Data.attrib["Value"] = Value
 
@@ -836,6 +836,8 @@ class Title(object):
         self.Programmer_Call_Letters = u''
         self.Recording_Artist = u''
         self.Song_Title = u''
+        self.Target_Language = u''
+        self.Target_Country  = u''
         
 
 	self.Custom_Metadata = []
@@ -867,16 +869,16 @@ class Title(object):
 	# Campos Requeridos
 	# 
 	Metadata.append(App_Data_Element(self.App_Data_App, "Type",self.Type))
-	Metadata.append(App_Data_Element(self.App_Data_App, "Title_Brief",self.Title_Brief))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Title",self.Title))
-	Metadata.append(App_Data_Element(self.App_Data_App, "Summary_Short",self.Summary_Short))
-	Metadata.append(App_Data_Element(self.App_Data_App, "Rating",self.Rating))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Title_Brief",self.Title_Brief, self.Target_Language))
+        Metadata.append(App_Data_Element(self.App_Data_App, "Title",self.Title, self.Target_Language))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Summary_Short",self.Summary_Short, self.Target_Language))
+	Metadata.append(App_Data_Element(self.App_Data_App, "Rating",self.Rating, '', self.Target_Country))
 	Metadata.append(App_Data_Element(self.App_Data_App, "Closed_Captioning",self.Closed_Captioning))
         Metadata.append(App_Data_Element(self.App_Data_App, "Run_Time",self.Run_Time))
         Metadata.append(App_Data_Element(self.App_Data_App, "Display_Run_Time",self.Display_Run_Time))
         Metadata.append(App_Data_Element(self.App_Data_App, "Year",self.Year))
 	Metadata.append(App_Data_Element(self.App_Data_App, "Category",self.Category))
-        Metadata.append(App_Data_Element(self.App_Data_App, "Genre",self.Genre))
+        Metadata.append(App_Data_Element(self.App_Data_App, "Genre",self.Genre, self.Target_Language))
 	Metadata.append(App_Data_Element(self.App_Data_App, "Show_Type",self.Show_Type))
         Metadata.append(App_Data_Element(self.App_Data_App, "Licensing_Window_Start",self.Licensing_Window_Start))
         Metadata.append(App_Data_Element(self.App_Data_App, "Licensing_Window_End",self.Licensing_Window_End))
@@ -896,9 +898,9 @@ class Title(object):
         if self.Episode_ID != '':
     	    Metadata.append(App_Data_Element(self.App_Data_App, "Episode_ID",self.Episode_ID))
 	if self.Summary_Long != '':
-	    Metadata.append(App_Data_Element(self.App_Data_App, "Summary_Long",self.Summary_Long))
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Summary_Long",self.Summary_Long, self.Target_Language))
 	if self.Summary_Medium != '':
-    	    Metadata.append(App_Data_Element(self.App_Data_App, "Summary_Medium",self.Summary_Medium))
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Summary_Medium",self.Summary_Medium, self.Target_Language))
 	if self.Advisories != '':
     	    Metadata.append(App_Data_Element(self.App_Data_App, "Advisories",self.Advisories))
 	if self.Country_of_Origin != '':
