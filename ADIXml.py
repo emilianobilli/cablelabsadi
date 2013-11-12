@@ -882,13 +882,15 @@ class Title(object):
 	Metadata.append(App_Data_Element(self.App_Data_App, "Show_Type",self.Show_Type))
         Metadata.append(App_Data_Element(self.App_Data_App, "Licensing_Window_Start",self.Licensing_Window_Start))
         Metadata.append(App_Data_Element(self.App_Data_App, "Licensing_Window_End",self.Licensing_Window_End))
-	Metadata.append(App_Data_Element(self.App_Data_App, "Preview_Period",self.Preview_Period))
+	
 	Metadata.append(App_Data_Element(self.App_Data_App, "Provider_QA_Contact",self.Provider_QA_Contact))
 
 
 	#
 	# Campos Opcionales
 	#
+	if self.Preview_Period != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Preview_Period",self.Preview_Period))
 	if self.Billing_ID != '':
 	    Metadata.append(App_Data_Element(self.App_Data_App, "Billing_ID", self.Billing_ID))
 	if self.Title_Sort_Name != '':
