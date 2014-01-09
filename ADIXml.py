@@ -336,7 +336,7 @@ def Package_fromADIFile(ADIFile=None):
 
     return None
 
-def Package_toADIFile(package=None, ADIFile=None, Version='1.1', doctype=None):
+def Package_toADIFile(package=None, ADIFile=None, Version='1.1', enc='ISO-8859-1', doctype=None):
     if package is not None:
 	#
 	# Bug a corregir
@@ -348,7 +348,9 @@ def Package_toADIFile(package=None, ADIFile=None, Version='1.1', doctype=None):
         ADIElement = package.AdiElement()
         if ADIElement is not None:
 	    indent(ADIElement)
-            AdiString = tostring(ADIElement, encoding="ISO-8859-1", doctype=doctype)
+	    print enc
+#	    AdiString = tostring(ADIElement, encoding='ISO-8859-1', doctype=doctype)
+            AdiString = tostring(ADIElement, encoding=enc, doctype=doctype)
 	    if ADIFile is not None:
         	if Version == '1.1':
 		    fd = open(ADIFile, "wb")
