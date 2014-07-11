@@ -25,6 +25,8 @@ class NepeXml(object):
 	self.AudioType = ''
 	self.VideoFile = ''
 	self.VideoFormat = ''
+	self.NepeVideoFile = ''
+
 
     def ToElement(self):
 	NepeXml = Element("NepeXml")
@@ -51,6 +53,7 @@ class NepeXml(object):
 	AudioType   = Element('AudioType')
 	VideoFile   = Element('VideoFile')
 	VideoFormat = Element('VideoFormat')
+	NepeVideoFile = Element('NepeVideoFile')
 	
 	ItemID.text      = self.ItemID
 	ExportDate.text  = self.ExportDate
@@ -74,6 +77,7 @@ class NepeXml(object):
 	AudioType.text   = self.AudioType
 	VideoFile.text   = self.VideoFile
 	VideoFormat.text = self.VideoFormat
+	NepeVideoFile.text    = self.NepeVideoFile
 	
 	NepeXml.append(ItemID)
 	NepeXml.append(ExportDate)
@@ -97,6 +101,7 @@ class NepeXml(object):
 	NepeXml.append(AudioType)
 	NepeXml.append(VideoFile)
 	NepeXml.append(VideoFormat)
+	NepeXml.append(NepeVideoFile)
 	
 	return NepeXml
 	
@@ -204,5 +209,8 @@ def fromAdiFile(FileName=None):
 	    VideoFormat = Element.find("VideoFormat")
 	    if VideoFormat is not None:
 		Nepe.VideoFormat = VideoFormat.text
+	    NepeVideoFile = Elment.find("NepeVideoFile")
+	    if NepeVideoFile is not None:
+		Nepe.VideoFileName = NepeVideoFile.text
 
 	return Nepe
