@@ -136,11 +136,11 @@ def fromAdiFile(FileName=None):
     if FileName is not None:
 	
 	Element = parse(FileName)
-	dump(Element)
+	#dump(Element)
 	Nepe = NepeXml()
 	if Element is not None:
 	    ItemID = Element.find("ItemID")
-	    dump(ItemID)
+	    #dump(ItemID)
 	    if ItemID is not None:
 		Nepe.ItemID = ItemID.text 
 	    ItemID = Element.find("ItemID") 
@@ -209,8 +209,8 @@ def fromAdiFile(FileName=None):
 	    VideoFormat = Element.find("VideoFormat")
 	    if VideoFormat is not None:
 		Nepe.VideoFormat = VideoFormat.text
-	    NepeVideoFile = Elment.find("NepeVideoFile")
+	    NepeVideoFile = Element.find("NepeVideoFile")
 	    if NepeVideoFile is not None:
-		Nepe.VideoFileName = NepeVideoFile.text
+		Nepe.NepeVideoFile = NepeVideoFile.text
 
 	return Nepe

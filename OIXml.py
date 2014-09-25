@@ -291,6 +291,8 @@ class metadata(object):
 	self.studio 		= ''
 	self.studioDisplayName 	= ''
 	self.category 		= ''
+	self.category1		= ''
+	self.category2		= ''
 	self.autoDeploy 	= ''
 	self.autoImport 	= ''
 	self.actor 	        = actor()
@@ -316,6 +318,8 @@ class metadata(object):
 	studio 			= Element('studio')
 	studioDisplayName 	= Element('studioDisplayName')
 	category 		= Element('category')
+	category1		= Element('category')
+	category2		= Element('category')
 	autoDeploy 		= Element('autoDeploy')
 	autoImport 		= Element('autoImport')
 			
@@ -343,6 +347,8 @@ class metadata(object):
 	studio.text 		= self.studio
 	studioDisplayName.text 	= self.studioDisplayName
 	category.text 		= self.category
+	category1.text		= self.category1
+	category2.text		= self.category2
 	autoDeploy.text 	= self.autoDeploy
 	autoImport.text 	= self.autoImport
 	
@@ -362,6 +368,10 @@ class metadata(object):
 	metadata.append(studio)
 	metadata.append(studioDisplayName)
 	metadata.append(category)
+	if self.category1 != '':
+	    metadata.append(category1)
+	if self.category2 != '':
+	    metadata.append(category2)    
 	metadata.append(autoDeploy)
 	metadata.append(autoImport)
 	metadata.append(self.actor.ToElement())

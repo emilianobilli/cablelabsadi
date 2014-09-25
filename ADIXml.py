@@ -169,7 +169,7 @@ class StillImage(Media):
 	# Custom Metadata ??? Agregale tu campo custom al XML
 	#
 	for CM in self.Custom_Metadata:
-	    Metadata.append(App_Data_Element(self.App_Data_App, CM.Name, CM.Value, CM.Target_Language, CM.Target_Contry))
+	    Metadata.append(App_Data_Element(self.App_Data_App, CM.Name, CM.Value, CM.Target_Language, CM.Target_Country))
 	
 	if self.Image_Aspect_Ratio != '':
     	    Metadata.append(App_Data_Element(self.App_Data_App, "Image_Aspect_Ratio", self.Image_Aspect_Ratio))
