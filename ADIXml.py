@@ -258,7 +258,7 @@ class Movie(Media):
 	self.Watermarking           = u''
 	self.Languages              = u''
 	self.Copy_Protection        = u''
-	
+	self.Subtitle_Languages	    = u''	
 
 
     def AddCustomMetadata(self, Name = None, Value = None, Target_Language=u'', Target_Country=u''):
@@ -316,14 +316,14 @@ class Movie(Media):
 	    Metadata.append(App_Data_Element(self.App_Data_App, "Languages", self.Languages))
         if self.Copy_Protection != '':
 	    Metadata.append(App_Data_Element(self.App_Data_App, "Copy_Protection", self.Copy_Protection))
-       
+        if self.Subtitle_Languages != '':
+    	    Metadata.append(App_Data_Element(self.App_Data_App, "Subtitle_Languages", self.Subtitle_Languages))
 
 
         Content.attrib["Value"] = self.Content_Value
         
         Asset.append(Metadata)
         Asset.append(Content)
-
 
         
         return Asset
