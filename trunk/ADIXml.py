@@ -152,7 +152,7 @@ class StillImage(Media):
     def __init__(self, Asset_Class=None, App_Data_App=None, toBuild=True):
         super(StillImage,self).__init__(Asset_Class, App_Data_App,toBuild)
         self.Image_Aspect_Ratio = u''
-
+	self.Encoding_Type = u''
 
     def AssetElement(self):
         Asset    = Element("Asset")
@@ -173,6 +173,9 @@ class StillImage(Media):
 	
 	if self.Image_Aspect_Ratio != '':
     	    Metadata.append(App_Data_Element(self.App_Data_App, "Image_Aspect_Ratio", self.Image_Aspect_Ratio))
+	if self.Encoding_Type != '':
+	    Metadata.append(App_Data_Element(self.App_Data_App, "Encoding_Type", self.Encoding_Type))
+
 
         Content.attrib["Value"] = self.Content_Value
         
@@ -699,7 +702,7 @@ class Package(object):
                 Asset_Image = self.StillImage.AssetElement()
                 Asset_Title.append(Asset_Image)
 
-	    is self.StillImage_2 is not None:
+	    if self.StillImage_2 is not None:
 		Asset_Image_2 = self.StillImage_2.AssetElement()
 		Asset_Title.append(Asset_Image_2)
 
