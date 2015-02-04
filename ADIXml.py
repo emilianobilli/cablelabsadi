@@ -673,7 +673,8 @@ class Package(object):
         self.Movie = None
 
         self.StillImage = None
-
+    
+	self.StillImage_2 = None
 
 
     def AdiElement(self):
@@ -697,6 +698,10 @@ class Package(object):
             if self.StillImage is not None:
                 Asset_Image = self.StillImage.AssetElement()
                 Asset_Title.append(Asset_Image)
+
+	    is self.StillImage_2 is not None:
+		Asset_Image_2 = self.StillImage_2.AssetElement()
+		Asset_Title.append(Asset_Image_2)
 
 	    if self.Preview is not None:
 		Asset_Preview = self.Preview.AssetElement()
@@ -744,6 +749,23 @@ class Package(object):
         self.Movie.AMS.Provider_ID   = self.AMS.Provider_ID
         self.Movie.AMS.Asset_ID      = self.AMS.Asset_ID
 
+    def AddStillImage_2(self, Type = None):
+        if Type == "poster":
+                self.StillImage_2 = Poster(self.App_Data_App)
+                self.StillImage_2.AMS.Asset_Name = self.AMS.Asset_Name + "_poster"
+
+        else:
+                self.StillImage_2 = BoxCover(self.App_Data_App)
+                self.StillImage_2.AMS.Asset_Name = self.AMS.Asset_Name + "_box_cover"
+
+        self.StillImage_2.AMS.Provider      = self.AMS.Provider
+        self.StillImage_2.AMS.Product       = self.AMS.Product
+        self.StillImage_2.AMS.Description   = self.AMS.Description
+        self.StillImage_2.AMS.Creation_Date = self.AMS.Creation_Date
+        self.StillImage_2.AMS.Provider_ID   = self.AMS.Provider_ID
+        self.StillImage_2.AMS.Asset_ID      = self.AMS.Asset_ID
+        
+        
     def AddStillImage(self, Type = None):
         if Type == "poster":
                 self.StillImage = Poster(self.App_Data_App)
@@ -758,7 +780,7 @@ class Package(object):
         self.StillImage.AMS.Description   = self.AMS.Description
         self.StillImage.AMS.Creation_Date = self.AMS.Creation_Date
         self.StillImage.AMS.Provider_ID   = self.AMS.Provider_ID
-        self.StillImage.AMS.Asset_ID      = self.AMS.Asset_ID
+        self.StillImage.AMS.Asset_ID      = self.AMS.Asset_ID    
         
         
     def AddPoster(self):
